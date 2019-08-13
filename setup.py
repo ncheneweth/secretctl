@@ -19,7 +19,7 @@ setup(
         'Development Status :: 3 - Alpha',
     ],
     python_requires='>=3.5',
-    install_requires=['invoke', 'boto3', 'pyyaml', 'requests'],
+    install_requires=['invoke', 'boto3', 'pyyaml', 'requests', 'colorama'],
     setup_requires=['setuptools_scm'],
     use_scm_version=True,
     entry_points={

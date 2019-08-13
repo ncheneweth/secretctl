@@ -7,7 +7,7 @@ setup(
     name="secretctl",
     author="Nic Cheneweth",
     author_email="nic.cheneweth@thoughtworks.com",
-    description="Command-line tool and module for working with aws secrets manager",
+    description="Command line tool for working with aws secrets manager",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/ncheneweth/secretctl",
@@ -19,7 +19,8 @@ setup(
         'Development Status :: 3 - Alpha',
     ],
     python_requires='>=3.5',
-    install_requires=['invoke', 'boto3', 'pyyaml', 'requests', 'colorama'],
+    requirements=['invoke', 'boto3', 'pyyaml', 'requests', 'colorama'],
+    install_requires=requirements,
     setup_requires=['setuptools_scm'],
     use_scm_version=True,
     entry_points={

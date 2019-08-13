@@ -1,4 +1,4 @@
-invoke
+-e .
+
 pytest
-colorama
 twine

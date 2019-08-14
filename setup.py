@@ -3,6 +3,8 @@ from setuptools import setup, find_packages
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
+requirements=['invoke', 'boto3', 'pyyaml', 'requests', 'colorama']
+
 setup(
     name="secretctl",
     author="Nic Cheneweth",
@@ -19,10 +21,10 @@ setup(
         'Development Status :: 3 - Alpha',
     ],
     python_requires='>=3.5',
-    requirements=['invoke', 'boto3', 'pyyaml', 'requests', 'colorama'],
     install_requires=requirements,
-    setup_requires=['setuptools_scm'],
+    setup_requires=['setuptools_scm', 'pytest-runner'],
     use_scm_version=True,
+    tests_require=['pytest'],
     entry_points={
         'console_scripts': ['secretctl = secretctl.main:program.run']
     }

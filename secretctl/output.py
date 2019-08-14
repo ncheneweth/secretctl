@@ -1,15 +1,14 @@
 """cli output formatters"""
-import sys
 import json
-from secretctl.validators import json_to_tags
 from colorama import init, Fore
+from secretctl.validators import json_to_tags
 init(autoreset=True)
 
 # print formatted results of read to stdout
 def print_read(secret, quiet=False, info=False):
     """format secretctl read response"""
     if quiet:
-        for _key, value in secret.value.items():
+        for _, value in secret.value.items():
             print(value)
     else:
         col_path = len(secret.path) + 3
@@ -56,19 +55,52 @@ def desc_col_length(secrets):
 
 def print_export(secrets, output='tfvars'):
     """export secret list in desired format"""
-    resp = ""
-    if output == 'csv': resp+="Key,Value\n"
-    if output == 'json': resp+="{\n"
-    for index, secret in enumerate(secrets):
-        for key, value in secret.value.items():
-            if output == 'tfvars':
-                resp+=f"{key}={value}\n"
-            elif output == 'json':
-                resp+=f"\"{key}\": \"{value}\",\n"
-            elif output == 'csv':
-                resp+=f"{key},{value}\n"
-            else:
-                print('secretctl: supported export formats json, csv, tfvars(default)')
-                sys.exit(1)
-    if output == 'json': resp = resp[:-2] + "\n}"
-    print(resp)
+    options = {'tfvars': print_tfvars, 'json': print_json, 'csv': print_csv}
+    if output in options:
+        options[output]([secret.value for secret in secrets])
+    else:
+        print('secretctl: export format supported include tfvars, json, ')
+
+def print_tfvars(secrets):
+    """print key=value pairs to stdout"""
+    for secret in secrets:
+        for key in secret:
+            print(f"{key}={secret[key]}")
+
+def print_json(secrets):
+    """print json formatted key: value pairs to stdout"""
+    result = ""
+    result += "{\n"
+    for secret in secrets:
+        for key in secret:
+            result += f"\"{key}\": \"{secret[key]}\",\n"
+    result = result[:-2] + "\n}"
+    print(result)
+
+def print_csv(secrets):
+    """print csv formatted key,value pairs to stdout"""
+    print('Key,Value')
+    for secret in secrets:
+        for key in secret:
+            print(f"{key},{secret[key]}")
+
+
+
+# def print_export(secrets, output='tfvars'):
+#     """export secret list in desired format"""
+#     resp = ""
+#     if output == 'csv': resp += "Key,Value\n"
+#     if output == 'json': resp += "{\n"
+#     for _, secret in enumerate(secrets):
+#         for key, value in secret.value.items():
+#             if output == 'tfvars':
+#                 resp += f"{key}={value}\n"
+#             elif output == 'json':
+#                 resp += f"\"{key}\": \"{value}\",\n"
+#             elif output == 'csv':
+#                 resp += f"{key},{value}\n"
+#             else:
+#                 print('secretctl: supported export formats json, csv, tfvars(default)')
+#                 sys.exit(1)
+#     if output == 'json': resp = resp[:-2] + "\n}"
+#     print(resp)

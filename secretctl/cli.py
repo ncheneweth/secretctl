@@ -1,11 +1,9 @@
 """cli commands"""
 import json
-import sys
 from invoke import task
 from secretctl.validators import validate_path, tags_to_json, set_secret, read_value
-from secretctl.tuples import Secret, create_secret, update_secret, get_secret, tag_secret, untag_secret, list_secrets
+from secretctl.tuples import create_secret, update_secret, get_secret, tag_secret, untag_secret, list_secrets
 from secretctl.output import print_read, print_list, print_export
-
 
 
 @task(optional=['isjson', 'description', 'tags'])
@@ -30,8 +28,8 @@ def create(_ctx, path, value, isjson=False, description=None, tags=None):
     secret_kwargs['path'] = validate_path(path)
     secret_kwargs['value'] = read_value(path, value, isjson)
     secret_kwargs['description'] = description
-    if tags:
-        secret_kwargs['tags'] = tags_to_json(tags)
+    if tags: secret_kwargs['tags'] = tags_to_json(tags)
+
     resp = create_secret(**secret_kwargs)
     print(f"{resp.path} created")
 
@@ -132,12 +130,13 @@ def list(_ctx, path=None, tags=None):
                             app/dev/some_secret   1         2019-03-07 09:39:15   [{'Key': 'team', 'Value': 'bravo'}]
                             app/qa/secret         3         2019-04-22 12:04:21
     """
-    path = validate_path(path) if path else path
     secrets = []
-    for secret in list_secrets():
-        if not path or (path and secret['Name'].startswith(path)):
-            if not tags or ('Tags' in secret and tags in json.dumps(secret['Tags'])):
-                secrets.append(set_secret(secret))
+    filter_secrets = list_secrets()
+    if path: path = validate_path(path)
+    filter_secrets = [sec for sec in filter_secrets if not path or (path and sec['Name'].startswith(path))]
+    filter_secrets = [sec for sec in filter_secrets if not tags or ('Tags' in sec and tags in json.dumps(sec['Tags']))]
+    for secret in filter_secrets:
+        secrets.append(set_secret(secret))
 
     if len(secrets) >= 1:
         print_list(secrets)
@@ -149,31 +148,27 @@ def list(_ctx, path=None, tags=None):
 def export(_ctx, path, output='tfvars'):
     """export formatted list of secrets [Flags]
 
+       $> secretctl export myapp/dev
+       docker_login=username123
+       docker_password=passwordABC
+
        Flags:
 
-         --output [option]  Returns the subset of secrets with path STRING.
-                            Ex: lists all the secrets for the dev environment of myapp
+         --output [option]  Output format options: tfvars(dotenv), json, csv
 
-                            $>  secretctl list -p myapp/dev
-                            Path/Key                   Version   Updated               Description
-                            myapp/dev/docker_login     1         2019-07-28 19:09:55   private docker registry login
-                            myapp/dev/docker_password  3         2019-07-29 11:54:18   private docker registry
+                            $>  secretctl export myapp/dev -o json > env_vars.json
+                            $>  cat env_vars.json
+                            {
+                            "docker_login": "username123",
+                            "docker_password": "passwordABC"
+                            }
 
     """
-    path = validate_path(path) if path else path
+    if path: path = validate_path(path)
     secrets = []
-
-    for id in list_secrets():
-        secret = None
-        # assess secrets matching path value, or all if none
-        if not path:
-            secret = id['Name']
-        elif path and id['Name'].startswith(path):
-            secret = id['Name']
-
-        # if --tag <value> then return only keys on path where <value> is in tag
-        if secret:
-            secrets.append(get_secret(secret))
+    for secret in list_secrets():
+        if not path or (path and secret['Name'].startswith(path)):
+            secrets.append(get_secret(secret['Name']))
 
     if len(secrets) >= 1:
         print_export(secrets, output=output)

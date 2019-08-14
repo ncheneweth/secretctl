@@ -2,7 +2,7 @@
 import re
 import sys
 import json
-from secretctl.tuple import Secret
+from secretctl.tuples import Secret
 
 DELIM = '/'
 

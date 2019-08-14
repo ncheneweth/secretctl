@@ -22,7 +22,7 @@ Secret.versions.__doc__ = "[Versions] from list_secret_version_ids()"
 
 def create_secret(path, value, description=None, tags=None):
     """create path:value in AWS Secrets Manager"""
-    _session = boto3.session.Session().client(service_name='secretsmanager')
+    _session = boto3.session.Session().client(service_name='secretsmanager', region_name='us-east-1')
 
     secret_kwargs = {}
     try:
@@ -42,7 +42,7 @@ def create_secret(path, value, description=None, tags=None):
 def get_secret(path):
     #pylint: disable=R1260
     """get path from from AWS Secrets Manager"""
-    _session = boto3.session.Session().client(service_name='secretsmanager')
+    _session = boto3.session.Session().client(service_name='secretsmanager', region_name='us-east-1')
 
     secret_kwargs = {}
     try:
@@ -63,7 +63,7 @@ def get_secret(path):
 
 def update_secret(path, value, description=None):
     """modify secret (causing new version), update description and/or tags"""
-    _session = boto3.session.Session().client(service_name='secretsmanager')
+    _session = boto3.session.Session().client(service_name='secretsmanager', region_name='us-east-1')
 
     secret_kwargs = {}
     try:
@@ -81,7 +81,7 @@ def update_secret(path, value, description=None):
 
 def tag_secret(path, tags=None):
     """add tags to secret"""
-    _session = boto3.session.Session().client(service_name='secretsmanager')
+    _session = boto3.session.Session().client(service_name='secretsmanager', region_name='us-east-1')
 
     secret_kwargs = {}
     secret_kwargs['SecretId'] = path
@@ -95,7 +95,7 @@ def tag_secret(path, tags=None):
 
 def untag_secret(path, tags=None):
     """remove tags from secret"""
-    _session = boto3.session.Session().client(service_name='secretsmanager')
+    _session = boto3.session.Session().client(service_name='secretsmanager', region_name='us-east-1')
 
     secret_kwargs = {}
     secret_kwargs['SecretId'] = path
@@ -109,7 +109,7 @@ def untag_secret(path, tags=None):
 
 def list_secrets():
     """list all secrets"""
-    _session = boto3.session.Session().client(service_name='secretsmanager')
+    _session = boto3.session.Session().client(service_name='secretsmanager', region_name='us-east-1')
 
     _secrets = []
     paginator = _session.get_paginator('list_secrets')

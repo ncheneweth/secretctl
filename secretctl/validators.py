@@ -39,7 +39,7 @@ def tags_to_json(tags, novalue=False):
 def json_to_tags(tags):
     """format json Tags as simple tag list"""
     tag_list = ""
-    for index, _tag in enumerate(tags):
+    for index, _ in enumerate(tags):
         if index == 0:
             tag_list += (tags[index]['Key'] + '=' + tags[index]['Value'])
         else:
@@ -59,12 +59,12 @@ def read_value(path, value, isjson=False):
         resp = json.dumps({path.split(DELIM)[-1]: value})
     return resp
 
-def set_secret(id):
+def set_secret(secret):
     """return Secret from list_secret element"""
     secret_kwargs = {}
-    secret_kwargs['path'] = id['Name']
-    if 'Description' in id:
-        secret_kwargs['description'] = id['Description']
-    if 'Tags' in id:
-        secret_kwargs['tags'] = id['Tags']
+    secret_kwargs['path'] = secret['Name']
+    if 'Description' in secret:
+        secret_kwargs['description'] = secret['Description']
+    if 'Tags' in secret:
+        secret_kwargs['tags'] = secret['Tags']
     return Secret(**secret_kwargs)

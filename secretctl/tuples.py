@@ -1,7 +1,7 @@
-"""tuples with setters/getters used in secretctl cli"""
-from typing import NamedTuple
+"""NamedTuple and (basically) setters/getters used in secretctl cli"""
 import json
 import sys
+from typing import NamedTuple
 import boto3
 from botocore.exceptions import ClientError
 
@@ -20,10 +20,10 @@ Secret.description.__doc__ = "[Description] a description of the secret"
 Secret.tags.__doc__ = "[Tags] tags in form of [{ \"Key\": \"<tag name>\", \"Value\": \"<tag value>\"}]"
 Secret.versions.__doc__ = "[Versions] from list_secret_version_ids()"
 
+_session = boto3.session.Session().client(service_name='secretsmanager', region_name='us-east-1')
+
 def create_secret(path, value, description=None, tags=None):
     """create path:value in AWS Secrets Manager"""
-    _session = boto3.session.Session().client(service_name='secretsmanager', region_name='us-east-1')
-
     secret_kwargs = {}
     try:
         secret_kwargs['Name'] = path
@@ -42,8 +42,6 @@ def create_secret(path, value, description=None, tags=None):
 def get_secret(path):
     #pylint: disable=R1260
     """get path from from AWS Secrets Manager"""
-    _session = boto3.session.Session().client(service_name='secretsmanager', region_name='us-east-1')
-
     secret_kwargs = {}
     try:
         secret_kwargs['path'] = path
@@ -63,8 +61,6 @@ def get_secret(path):
 
 def update_secret(path, value, description=None):
     """modify secret (causing new version), update description and/or tags"""
-    _session = boto3.session.Session().client(service_name='secretsmanager', region_name='us-east-1')
-
     secret_kwargs = {}
     try:
         resp = _session.describe_secret(SecretId=path)
@@ -81,8 +77,6 @@ def update_secret(path, value, description=None):
 
 def tag_secret(path, tags=None):
     """add tags to secret"""
-    _session = boto3.session.Session().client(service_name='secretsmanager', region_name='us-east-1')
-
     secret_kwargs = {}
     secret_kwargs['SecretId'] = path
     secret_kwargs['Tags'] = tags
@@ -95,8 +89,6 @@ def tag_secret(path, tags=None):
 
 def untag_secret(path, tags=None):
     """remove tags from secret"""
-    _session = boto3.session.Session().client(service_name='secretsmanager', region_name='us-east-1')
-
     secret_kwargs = {}
     secret_kwargs['SecretId'] = path
     secret_kwargs['TagKeys'] = tags
@@ -109,8 +101,6 @@ def untag_secret(path, tags=None):
 
 def list_secrets():
     """list all secrets"""
-    _session = boto3.session.Session().client(service_name='secretsmanager', region_name='us-east-1')
-
     _secrets = []
     paginator = _session.get_paginator('list_secrets')
     page_iterator = paginator.paginate()

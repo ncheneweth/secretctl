@@ -2,7 +2,11 @@ import json
 import pytest
 import boto3
 from moto import mock_secretsmanager
-from secretctl.tuples import get_secret, create_secret, update_secret, list_secrets
+
+from secretctl.tuples import get_secret
+from secretctl.tuples import create_secret
+from secretctl.tuples import update_secret
+from secretctl.tuples import list_secrets
 
 # moto does not support secretsmanager tag or untag tests
 

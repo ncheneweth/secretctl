@@ -11,10 +11,12 @@ def print_read(secret, quiet=False, info=False):
     options[quiet](secret, info)
 
 def print_read_quiet(secret, _=False):
+    """read quiet"""
     for _, value in secret.value.items():
         print(value)
 
 def print_read_normal(secret, info=False):
+    """format normal output from read"""
     col_path = len(secret.path) + 3
     print(Fore.YELLOW + "{:{wid}} {:<9} {}".format('Path/Key', 'Version', 'Value', wid=col_path))
     # output full json when the secret is multiple key:value pairs

@@ -1,5 +1,5 @@
 import pytest
-from secretctl.validators import validate_path, tags_to_json
+from secretctl.validators import validate_path, tags_to_json, read_value
 import sys
 
 # test secretctl.validators.validate_path()
@@ -52,4 +52,16 @@ def json_to_tags():
     # confirm valid transformation - can assume will always receive valid json from secretsmanager
     assert json_to_tags({"Key": "tag", "Value": "value"}) == 'tag=value'
     assert json_to_tags({"Key": "tag1", "Value": "value1"}, {"Key": "tag2", "Value": "value2"}) == 'tag1=value1, tag2=value2'
-    
+
+
+# test secretctl.cli.read_value()
+def test_read_value():
+    simple_value = 'abc123'
+    json_value = "{\"key1\": \"value1\",\"key2\": \"value2\"}"
+    malformed_json = "this is not a json string"
+
+    assert read_value('app/env/value', simple_value, isjson=False) == "{\"value\": \"abc123\"}"
+    assert read_value('0604a5a3-c5c5-49fb-aaa9-769cfadfb884/env/value', json_value, isjson=True) == json_value
+
+    with pytest.raises(SystemExit):
+        assert read_value('app/env/value', malformed_json, isjson=True) == {"value": "this is not a json string"}

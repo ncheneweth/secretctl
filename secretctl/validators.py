@@ -18,21 +18,28 @@ def validate_path(path):
 
 # convert cli provided tags into key:value json
 def tags_to_json(tags, novalue=False):
-    """ validate supplied tags and convert to secretsmanager tags json"""
+    """validate supplied tags and convert to secretsmanager tags json"""
+    options = {True: tags_without_values, False: tags_with_values}
+    return options[novalue](tags)
+
+def tags_with_values(tags):
+    """validate supplied tags-with-values and convert to secretsmanager tags json"""
     tag_list = []
     for tag in tags.split(","):
-        if novalue:
-            if not re.match(r"^([a-zA-Z0-9\/\+\:_@.-]{3,127})$", tag.strip()):
-                print("secretctl: invalid remove tags list. Supply tags as \"tag1, tag2, ...\"")
-                sys.exit(1)
-            else:
-                tag_list.append(tag.strip())
-        else:
-            if not re.match(r"^(([a-zA-Z0-9\/\+\:_@.-]{3,127})\s*[=]\s*([a-zA-Z0-9\/\+\:_@.-]{1,255}))$", tag.strip()):
-                print("secretctl: invalid tags list. Supply tags as \"tag1=value1, tag2=value2, ...\"")
-                sys.exit(1)
-            else:
-                tag_list.append({"Key": tag.split("=")[0].strip(), "Value": tag.split("=")[1].strip()})
+        if not re.match(r"^(([a-zA-Z0-9\/\+\:_@.-]{3,127})\s*[=]\s*([a-zA-Z0-9\/\+\:_@.-]{1,255}))$", tag.strip()):
+            print("secretctl: invalid tags list. Supply tags as \"tag1=value1, tag2=value2, ...\"")
+            sys.exit(1)
+        tag_list.append({"Key": tag.split("=")[0].strip(), "Value": tag.split("=")[1].strip()})
+    return tag_list
+
+def tags_without_values(tags):
+    """validate supplied tags-without-values and convert to secretsmanager tags json"""
+    tag_list = []
+    for tag in tags.split(","):
+        if not re.match(r"^([a-zA-Z0-9\/\+\:_@.-]{3,127})$", tag.strip()):
+            print("secretctl: invalid remove tags list. Supply tags as \"tag1, tag2, ...\"")
+            sys.exit(1)
+        tag_list.append(tag.strip())
     return tag_list
 
 # convert json Tags to simple cli formatted

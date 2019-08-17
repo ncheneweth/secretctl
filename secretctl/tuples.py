@@ -75,7 +75,8 @@ def update_secret(path, value, description=None):
         print(e)
         sys.exit(1)
 
-def tag_secret(path, tags=None):
+# removed from code coverage pending moto support for mocking secretsmanager tags
+def tag_secret(path, tags=None):  # pragma: no cover
     """add tags to secret"""
     secret_kwargs = {}
     secret_kwargs['SecretId'] = path
@@ -87,7 +88,8 @@ def tag_secret(path, tags=None):
         print(e)
         sys.exit(1)
 
-def untag_secret(path, tags=None):
+# removed from code coverage pending moto support for mocking secretsmanager tags
+def untag_secret(path, tags=None):  # pragma: no cover
     """remove tags from secret"""
     secret_kwargs = {}
     secret_kwargs['SecretId'] = path

@@ -90,8 +90,9 @@ def read(_ctx, path, quiet=False, info=False):
     print_read(get_secret(validate_path(path)), quiet=quiet, info=info)
 
 
+# removed from code coverage pending moto support for mocking secretsmanager tags
 @task
-def tag(_ctx, path, tags):
+def tag(_ctx, path, tags):   # pragma: no cover
     """add tag(s) to secret
 
     $>  secretctl tag myapp/dev/docker_login 'new_tag=value'
@@ -103,8 +104,9 @@ def tag(_ctx, path, tags):
     resp = tag_secret(**secret_kwargs)
     print(f"{resp.path} tagged")
 
+# removed from code coverage pending moto support for mocking secretsmanager tags
 @task
-def untag(_ctx, path, tags):
+def untag(_ctx, path, tags):   # pragma: no cover
     """remove tag(s) from secret
 
     $>  secretctl untag myapp/dev/docker_login 'new_tag'

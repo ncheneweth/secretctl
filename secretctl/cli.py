@@ -19,10 +19,7 @@ from .output import print_read, print_list, print_export
 
 @task(optional=['isjson', 'description', 'tags'])
 def create(_ctx, path, value, isjson=False, description=None, tags=None):
-    """add new path/key:value to Secrets Manager
-
-       $> secretctl create <path> <value | - [--isjson]>
-       <path> created
+    """create path/key value | - [--description STRING] [--tags TAG=STRING, ..] [--isjson]
 
        Flags:
 
@@ -46,10 +43,7 @@ def create(_ctx, path, value, isjson=False, description=None, tags=None):
 
 @task(optional=['isjson', 'description'])
 def update(_ctx, path, value, isjson=False, description=None):
-    """update secret value [Flags]
-
-       $> secretctl update <path> <value | - [--isjson]> [Flags]
-       <path> updated
+    """update path/key value | - [--description STRING] [--isjson]
 
        Flags:
 
@@ -69,7 +63,7 @@ def update(_ctx, path, value, isjson=False, description=None):
 
 @task(optional=['quiet', 'info'])
 def read(_ctx, path, quiet=False, info=False):
-    """read secret from Secrets Manager [Flags]
+    """read path/key [--quiet] [--info]
 
        $>  secretctl read myapp/dev/docker_login
        Path/Key                   Version   Value
@@ -85,7 +79,6 @@ def read(_ctx, path, quiet=False, info=False):
                             mydockerlogin
 
          --info             Show description and tags.
-
     """
     print_read(get_secret(validate_path(path)), quiet=quiet, info=info)
 
@@ -93,11 +86,7 @@ def read(_ctx, path, quiet=False, info=False):
 # removed from code coverage pending moto support for mocking secretsmanager tags
 @task
 def tag(_ctx, path, tags):   # pragma: no cover
-    """add tag(s) to secret
-
-    $>  secretctl tag myapp/dev/docker_login 'new_tag=value'
-    myapp/dev/docker_login tagged
-    """
+    """tag key/value 'TAG=STRING, ..'"""
     secret_kwargs = {}
     secret_kwargs['path'] = validate_path(path)
     secret_kwargs['tags'] = tags_to_json(tags)
@@ -107,11 +96,7 @@ def tag(_ctx, path, tags):   # pragma: no cover
 # removed from code coverage pending moto support for mocking secretsmanager tags
 @task
 def untag(_ctx, path, tags):   # pragma: no cover
-    """remove tag(s) from secret
-
-    $>  secretctl untag myapp/dev/docker_login 'new_tag'
-    tags removed from myapp/dev/docker_login
-    """
+    """untag path/key 'TAG, ..'"""
     secret_kwargs = {}
     secret_kwargs['path'] = validate_path(path)
     secret_kwargs['tags'] = tags_to_json(tags, novalue=True)
@@ -121,9 +106,7 @@ def untag(_ctx, path, tags):   # pragma: no cover
 #pylint: disable=W0622
 @task(optional=['path', 'tags'])
 def list(_ctx, path=None, tags=None):
-    """list secrets from Secrets Manager
-
-    $> secretctl list myapp/dev
+    """list [--path STRING] [--tags STRING]
 
        Flags:
 
@@ -141,7 +124,7 @@ def list(_ctx, path=None, tags=None):
                             $>  secretctl list -t bravo
                             Path/Key              Version   Updated               Tags
                             app/dev/some_secret   1         2019-03-07 09:39:15   [{'Key': 'team', 'Value': 'bravo'}]
-                            app/qa/secret         3         2019-04-22 12:04:21
+                            app/qa/secret         3         2019-04-22 12:04:21   [{'Key': 'team', 'Value': 'bravo'}]
     """
     secrets = []
     filter_secrets = list_secrets()
@@ -159,7 +142,7 @@ def list(_ctx, path=None, tags=None):
 
 @task(optional=['output'])
 def export(_ctx, path, output='tfvars'):
-    """export formatted list of secrets [Flags]
+    """export path/ [--output json | csv | tfvars(default)]
 
        $> secretctl export myapp/dev
        docker_login=username123

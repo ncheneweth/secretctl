@@ -33,10 +33,9 @@ commands:
             coverage report
             cc-test-reporter after-build
       - run:
-          name: package
-          command: |
-            python3 setup.py sdist bdist_wheel
-            python3 -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+          name: validate package build
+          command: python3 setup.py sdist bdist_wheel
+
 
 
 workflows:
@@ -48,3 +47,6 @@ workflows:
               only: /master/
             tags:
               ignore: /.*/
+
+
+# python3 -m twine upload -u $PYPI_USERNAME -p $PYPI_PASSWORD --repository-url dist/*

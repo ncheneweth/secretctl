@@ -15,7 +15,7 @@ jobs:
 
   dev-build:
     description: lint, test, package, push to pip-test area
-
+    executor: circleci-python-pkg-agent
     steps:
       - checkout
       - run:

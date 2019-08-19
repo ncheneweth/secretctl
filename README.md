@@ -12,8 +12,3 @@ no support for binary secret value type
 no mock support for testing descriptions or resource tags
 
 ---
-python3 setup.py sdist bdist_wheel
-python3 -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
-
-cc-test-reporter before-build
-cc-test-reporter after-build

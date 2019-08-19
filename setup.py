@@ -1,3 +1,4 @@
+import os
 from setuptools import setup, find_packages
 
 with open("README.md", "r") as fh:
@@ -23,7 +24,7 @@ setup(
     python_requires='>=3.5',
     install_requires=requirements,
     setup_requires=['pytest-runner','setuptools-git-version'],
-    version_format='{tag}.dev{commitcount}',
+    version_format='{tag}.dev{commitcount}' if not os.environ.get('CIRCLE_TAG') else '{tag}',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': ['secretctl = secretctl.main:program.run']

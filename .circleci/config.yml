@@ -21,7 +21,7 @@ jobs:
       - run:
           name: setup
           command:
-            # python3 setup.py sdist bdist_wheel
+            python3 setup.py sdist bdist_wheel
             pip install .
       - run:
           name: lint

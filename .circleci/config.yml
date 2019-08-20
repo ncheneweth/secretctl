@@ -60,7 +60,6 @@ jobs:
                     -u $PYPI_USERNAME \
                     -p $PYPI_PASSWORD \
 
-
 workflows:
   secretctl--pipeline:
     jobs:

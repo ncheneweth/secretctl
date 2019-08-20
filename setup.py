@@ -25,7 +25,7 @@ setup(
     install_requires=requirements,
     setup_requires=['pytest-runner','setuptools-git-version'],
     version_format='{tag}.dev{commitcount}' if not os.environ.get('CIRCLE_TAG') else '{tag}',
-    tests_require=['pytest'],
+    tests_require=['pytest', 'moto'],
     entry_points={
         'console_scripts': ['secretctl = secretctl.main:program.run']
     }

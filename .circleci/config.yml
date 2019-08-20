@@ -22,6 +22,7 @@ jobs:
           command: |
             python3 setup.py sdist bdist_wheel
             pip install .
+            pip install moto
       - run:
           name: lint
           command: pylint secretctl/
@@ -79,4 +80,3 @@ workflows:
               ignore: /.*/
             tags:
               only: /.*/
-              

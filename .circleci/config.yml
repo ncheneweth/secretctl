@@ -18,10 +18,12 @@ jobs:
       - checkout
       - run:
           name: setup
+          command: pip install moto
+      - run:
+          name: setup
           command: |
             python3 setup.py sdist bdist_wheel
             pip install .
-            pip install moto
       - run:
           name: lint
           command: pylint secretctl/

@@ -19,6 +19,10 @@ jobs:
     steps:
       - checkout
       - run:
+          name: build find_packages
+          command:
+            pip install .
+      - run:
           name: lint
           command: pylint secretctl/
       - run:

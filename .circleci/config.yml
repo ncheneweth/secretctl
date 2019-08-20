@@ -18,12 +18,12 @@ jobs:
       - checkout
       - run:
           name: setup
-          command: 'pip install moto --no-binary :all:'
-      - run:
-          name: setup
           command: |
             python3 setup.py sdist bdist_wheel
             pip install .
+      - run:
+          name: setup
+          command: 'pip install moto --no-binary :all:'
       - run:
           name: lint
           command: pylint secretctl/

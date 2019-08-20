@@ -2,7 +2,6 @@
 version: 2.1
 
 executors:
-
   circleci-python-pkg-agent:
     description: |
       Alpine Linux-based circleci primary container, based on feedyard/circleci-remote-docker. includes common tools

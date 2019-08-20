@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
-requirements=['invoke', 'boto3', 'pyyaml', 'requests', 'colorama']
+requirements=['invoke', 'boto3', 'pyyaml', 'requests', 'colorama', 'pkg_resources']
 
 setup(
     name="secretctl",

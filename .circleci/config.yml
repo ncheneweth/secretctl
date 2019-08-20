@@ -19,8 +19,9 @@ jobs:
     steps:
       - checkout
       - run:
-          name: build find_packages
+          name: setup
           command:
+            python3 setup.py sdist bdist_wheel
             pip install .
       - run:
           name: lint
@@ -39,7 +40,6 @@ jobs:
       - run:
           name: validate package build
           command: |
-            python3 setup.py sdist bdist_wheel
             python3 -m twine upload \
                     -u $PYPI_USERNAME \
                     -p $PYPI_PASSWORD \

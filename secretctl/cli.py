@@ -113,18 +113,20 @@ def list(_ctx, path=None, tags=None):
          --path STRING      Returns the subset of secrets with path STRING.
                             Ex: lists all the secrets for the dev environment of myapp
 
-                            $>  secretctl list -p myapp/dev
-                            Path/Key                   Version   Updated               Description
-                            myapp/dev/docker_login     1         2019-07-28 19:09:55   private docker registry login
-                            myapp/dev/docker_password  3         2019-07-29 11:54:18   private docker registry
+                            $>  secretctl list -p di/dev/
+                            Path/Key                Description                             Tags
+                            di/dev/docker_username  access credentials for private regis..  team=di
+                            di/dev/docker_password  access credentials for private regis..  team=di
+                            di/dev/vault_token      team vault token                        team=di
+                            Found 3 secrets.
 
          --tags STRING      Filter secrets by Tag STRING. Will includes tags with Keys or Values that 'contain' STRG.
                             Ex: lists all the secrets with a Tag containing a team's name, "bravo"
 
-                            $>  secretctl list -t bravo
-                            Path/Key              Version   Updated               Tags
-                            app/dev/some_secret   1         2019-03-07 09:39:15   [{'Key': 'team', 'Value': 'bravo'}]
-                            app/qa/secret         3         2019-04-22 12:04:21   [{'Key': 'team', 'Value': 'bravo'}]
+                            $ secretctl list -t bravo
+                            Path/Key      Description     Tags
+                            app/dev/pem   private key     team=bravo
+                            app/qa/pem    private key     team=bravo
     """
     secrets = []
     filter_secrets = list_secrets()

@@ -37,7 +37,7 @@ jobs:
             coverage run --source=secretctl/ setup.py test
             coverage xml
             coverage report
-            cc-test-reporter after-build  -r $CC_TEST_REPORTER_ID
+            cc-test-reporter after-build  -r $CC_TEST_REPORTER_ID -d
       - run:
           name: validate package build
           command: |

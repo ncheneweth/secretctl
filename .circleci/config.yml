@@ -37,6 +37,7 @@ jobs:
             coverage run --source=secretctl/ setup.py test
             coverage xml
             coverage report
+            echo $CIRCLE_SHA1
             cc-test-reporter after-build  -r $CC_TEST_REPORTER_ID -d
       - run:
           name: validate package build

@@ -38,7 +38,7 @@ jobs:
             coverage xml
             coverage report
             echo $CIRCLE_SHA1
-            cc-test-reporter after-build  --coverage-input-type simplecov -d
+            cc-test-reporter after-build  --coverage-input-type coverage.py -d
       - run:
           name: validate package build
           command: |

@@ -62,9 +62,6 @@ jobs:
                     -u $PYPI_USERNAME \
                     -p $PYPI_PASSWORD \
                     dist/*
-      - run:
-          name: github release
-          command: |
 
 
 workflows:

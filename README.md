@@ -1,6 +1,11 @@
 # secretctl [![CircleCI](https://circleci.com/gh/ncheneweth/secretctl.svg?style=svg)](https://circleci.com/gh/ncheneweth/secretctl) [![Test Coverage](https://api.codeclimate.com/v1/badges/01a1314e60921919bb12/test_coverage)](https://codeclimate.com/github/ncheneweth/secretctl/test_coverage) [![Maintainability](https://api.codeclimate.com/v1/badges/01a1314e60921919bb12/maintainability)](https://codeclimate.com/github/ncheneweth/secretctl/maintainability) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/feedyard/circleci-base-agent/master/LICENSE)
 Command-line tool for working with aws secrets manager.
 
+.. image:: https://circleci.com/gh/ncheneweth/secretctl.svg?style=svg
+   :target: https://circleci.com/gh/ncheneweth/secretctl
+   :alt: Build Status
+
+
 ## Installing
 
 `secretctl` is a python package.

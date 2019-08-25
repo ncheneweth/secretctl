@@ -1,10 +1,22 @@
-# secretctl [![CircleCI](https://circleci.com/gh/ncheneweth/secretctl.svg?style=svg)](https://circleci.com/gh/ncheneweth/secretctl) [![Test Coverage](https://api.codeclimate.com/v1/badges/01a1314e60921919bb12/test_coverage)](https://codeclimate.com/github/ncheneweth/secretctl/test_coverage) [![Maintainability](https://api.codeclimate.com/v1/badges/01a1314e60921919bb12/maintainability)](https://codeclimate.com/github/ncheneweth/secretctl/maintainability) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/feedyard/circleci-base-agent/master/LICENSE)
+[![CirclecI][circle-badge]][circle-repo]
+[![Test Coverage][cc-coverage-badge]][cc-coverage-repo]
+[![Maintainability][cc-maintainability-badge]][cc-maintainability-repo]
+[![PyPI version][pypy-badge]][pypy]
+[![License][license-badge]][license]
+
+# secretctl
 Command-line tool for working with aws secrets manager.
 
-.. image:: https://circleci.com/gh/ncheneweth/secretctl.svg?style=svg
-   :target: https://circleci.com/gh/ncheneweth/secretctl
-   :alt: Build Status
-
+[circle-badge]: https://circleci.com/gh/ncheneweth/secretctl.svg?style=svg
+[circle-repo]: https://circleci.com/gh/ncheneweth/secretctl
+[cc-coverage-badge]: https://api.codeclimate.com/v1/badges/01a1314e60921919bb12/test_coverage
+[cc-coverage-repo]: https://codeclimate.com/github/ncheneweth/secretctl/test_coverage
+[cc-maintainability-badge]: https://api.codeclimate.com/v1/badges/01a1314e60921919bb12/maintainability
+[cc-maintainability-repo]: https://codeclimate.com/github/ncheneweth/secretctl/maintainability
+[pypy-badge]: https://badge.fury.io/py/secretctl.svg
+[pypy]: https://pypi.python.org/pypi/secretctl
+[license-badge]: https://img.shields.io/badge/license-MIT-blue.svg
+[license]: https://raw.githubusercontent.com/feedyard/circleci-base-agent/master/LICENSE
 
 ## Installing
 

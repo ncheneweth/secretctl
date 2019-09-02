@@ -19,12 +19,12 @@ jobs:
       - run:
           name: will go in before-setup.py-wheel type steps section, don't want to presume package mgr
           command: |
-            python3 -m venv .venv
-            source .venv/bin/activate
+            pipenv --python 3.7
             pipenv install --dev -e .
-      - run:
-          name: build
-          command: python3 setup.py sdist bdist_wheel
+            pipenv shell
+      # - run:
+      #     name: build
+      #     command: python3 setup.py sdist bdist_wheel
       # - run:
       #     name: setup
       #     command: 'pip install moto --no-binary :all:'

@@ -21,9 +21,9 @@ jobs:
       #     command: |
       #       pipenv --python 3.7
       #       pipenv install --dev -e .
-      - run:
-          name: build
-          command: grssdfg
+      # - run:
+      #     name: build
+      #     command: grssdfg
       - run:
           name: setup
           command: |
@@ -44,7 +44,7 @@ jobs:
           name: validate package build
           command: |
             python3 setup.py sdist bdist_wheel
-            run python3 -m twine upload \
+            python3 -m twine upload \
                     -u $PYPI_USERNAME \
                     -p $PYPI_PASSWORD \
                     --repository-url https://test.pypi.org/legacy/ \

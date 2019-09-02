@@ -4,7 +4,14 @@ from setuptools import setup, find_packages
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
-requirements=['invoke', 'boto3', 'pyyaml', 'requests', 'colorama', 'better-setuptools-git-version']
+requirements=[
+    'invoke==1.3.0',
+    'boto3==1.9.220',
+    'pyyaml==5.1.2',
+    'requests==2.22.0',
+    'colorama==0.4.1',
+    'better-setuptools-git-version==1.0.5'
+]
 
 setup(
     name="secretctl",
@@ -24,12 +31,11 @@ setup(
     python_requires='>=3.5',
     install_requires=requirements,
     setup_requires=['pytest-runner','better-setuptools-git-version'],
-    #version_format='{tag}.dev{commitcount}' if not os.environ.get('CIRCLE_TAG') else '{tag}',
     version_config={
         "version_format": "{tag}.dev{sha}",
         "starting_version": "0.1.0"
     },
-    tests_require=['pytest', 'moto'],
+    tests_require=['pytest'],
     entry_points={
         'console_scripts': ['secretctl = secretctl.main:program.run']
     }

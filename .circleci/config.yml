@@ -17,13 +17,14 @@ jobs:
     steps:
       - checkout
       - run:
-          name: setup
-          command: |
-            python3 setup.py sdist bdist_wheel
-            pip install .
+          name: will go in before-setup.py-wheel type steps section, don't want to presume package mgr
+          command: pipenv install --dev -e .
       - run:
-          name: setup
-          command: 'pip install moto --no-binary :all:'
+          name: build
+          command: python3 setup.py sdist bdist_wheel
+      # - run:
+      #     name: setup
+      #     command: 'pip install moto --no-binary :all:'
       - run:
           name: lint
           command: pylint secretctl/
@@ -38,7 +39,7 @@ jobs:
       - run:
           name: validate package build
           command: |
-            python3 setup.py sdist bdist_wheel
+            # python3 setup.py sdist bdist_wheel
             python3 -m twine upload \
                     -u $PYPI_USERNAME \
                     -p $PYPI_PASSWORD \

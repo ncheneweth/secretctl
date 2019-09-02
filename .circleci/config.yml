@@ -18,7 +18,9 @@ jobs:
       - checkout
       - run:
           name: will go in before-setup.py-wheel type steps section, don't want to presume package mgr
-          command: pipenv install --dev -e .
+          command: |
+            pipenv install --dev -e .
+            pipenv shell
       - run:
           name: build
           command: python3 setup.py sdist bdist_wheel

@@ -1,10 +1,11 @@
+
+
+# secretctl
 [![CirclecI][circle-badge]][circle-repo]
 [![Test Coverage][cc-coverage-badge]][cc-coverage-repo]
 [![Maintainability][cc-maintainability-badge]][cc-maintainability-repo]
 [![PyPI version][pypy-badge]][pypy]
 [![License][license-badge]][license]
-
-# secretctl
 Command-line tool for working with aws secrets manager.
 
 [circle-badge]: https://circleci.com/gh/ncheneweth/secretctl.svg?style=svg

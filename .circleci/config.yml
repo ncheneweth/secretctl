@@ -19,8 +19,9 @@ jobs:
       - run:
           name: will go in before-setup.py-wheel type steps section, don't want to presume package mgr
           command: |
+            python -m venv .venv
+            source .venv/bin/activate
             pipenv install --dev -e .
-            pipenv shell
       - run:
           name: build
           command: python3 setup.py sdist bdist_wheel

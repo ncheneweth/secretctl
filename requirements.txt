@@ -1,0 +1,12 @@
+pylint
+pytest
+pytest-runner
+moto
+coverage
+pre-commit
+invoke==1.3.0
+boto3==1.9.220
+pyyaml==5.1.2
+requests==2.22.0
+colorama==0.4.1
+better-setuptools-git-version==1.0.5

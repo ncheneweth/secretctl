@@ -40,6 +40,21 @@ jobs:
             coverage xml
             coverage report
             cc-test-reporter after-build  --coverage-input-type coverage.py -d
+      # - run:
+      #     name: validate package build
+      #     command: |
+      #       python3 setup.py sdist bdist_wheel
+      #       python3 -m twine upload \
+      #               -u $PYPI_USERNAME \
+      #               -p $PYPI_PASSWORD \
+      #               --repository-url https://test.pypi.org/legacy/ \
+      #               dist/*
+
+  dev-release:
+    description: lint, test, package, push to pip-test area
+    executor: circleci-python-pkg-agent
+    steps:
+      - checkout
       - run:
           name: validate package build
           command: |
@@ -74,13 +89,23 @@ workflows:
               only: /master/
             tags:
               ignore: /.*/
-      - approve-publish package:
-          type: approval
+      - dev-release:
+          filters:
+            branches:
+              only: /master/
+            tags:
+              ignore: /.*/
           requires:
             - dev-build
+      - approve-publish-package:
+          type: approval
+          requires:
+            - dev-release
       - publish:
           filters:
             branches:
               ignore: /.*/
             tags:
               only: /.*/
+          requires:
+            - approve-publish-package

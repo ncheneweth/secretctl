@@ -21,7 +21,6 @@ jobs:
           command: |
             pipenv --python 3.7
             pipenv install --dev -e .
-            pipenv shell
       # - run:
       #     name: build
       #     command: python3 setup.py sdist bdist_wheel
@@ -30,20 +29,20 @@ jobs:
       #     command: 'pip install moto --no-binary :all:'
       - run:
           name: lint
-          command: pylint secretctl/
+          command: pipenv run pylint secretctl/
       - run:
           name: test and coverage
           command: |
-            cc-test-reporter before-build
-            coverage run --source=secretctl/ python setup.py test
-            coverage xml
-            coverage report
-            cc-test-reporter after-build  --coverage-input-type coverage.py -d
+            pipenv run cc-test-reporter before-build
+            pipenv run coverage run --source=secretctl/ python setup.py test
+            pipenv run coverage xml
+            pipenv run coverage report
+            pipenv run cc-test-reporter after-build  --coverage-input-type coverage.py -d
       - run:
           name: validate package build
           command: |
-            # python3 setup.py sdist bdist_wheel
-            python3 -m twine upload \
+            pipenv run python3 setup.py sdist bdist_wheel
+            pipenv run python3 -m twine upload \
                     -u $PYPI_USERNAME \
                     -p $PYPI_PASSWORD \
                     --repository-url https://test.pypi.org/legacy/ \

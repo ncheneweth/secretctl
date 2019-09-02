@@ -21,9 +21,9 @@ jobs:
       #     command: |
       #       pipenv --python 3.7
       #       pipenv install --dev -e .
-      # - run:
-      #     name: build
-      #     command: python3 setup.py sdist bdist_wheel
+      - run:
+          name: build
+          command: grssdfg
       - run:
           name: setup
           command: |

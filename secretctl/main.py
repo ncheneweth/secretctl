@@ -1,5 +1,4 @@
 """main.py"""
-import pkg_resources
 from invoke import Collection, Program
 from secretctl import cli
 from _version import __version__

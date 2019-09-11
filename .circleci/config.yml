@@ -74,15 +74,9 @@ workflows:
               ignore: /.*/
           requires:
             - dev-test
-      - approve-publish-package:
-          type: approval
-          requires:
-            - dev-build
       - publish:
           filters:
             branches:
               ignore: /.*/
             tags:
               only: /.*/
-          requires:
-            - approve-publish-package

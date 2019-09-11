@@ -12,7 +12,7 @@ executors:
 jobs:
 
   dev-test:
-    description: lint, test, package, push to pip-test area
+    description: lint, test, coverage
     executor: circleci-python-pkg-agent
     steps:
       - checkout
@@ -34,19 +34,13 @@ jobs:
             cc-test-reporter after-build  --coverage-input-type coverage.py -d
 
   dev-build:
-    description: lint, test, package, push to pip-test area
+    description: wheel build
     executor: circleci-python-pkg-agent
     steps:
       - checkout
       - run:
           name: validate package build
-          command: |
-            python3 setup.py sdist bdist_wheel
-            python3 -m twine upload \
-                    -u $PYPI_USERNAME \
-                    -p $PYPI_PASSWORD \
-                    --repository-url https://test.pypi.org/legacy/ \
-                    dist/*
+          command: python3 setup.py sdist bdist_wheel
 
   publish:
     description: publish new version pip package

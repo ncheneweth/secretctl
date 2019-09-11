@@ -15,10 +15,3 @@ repos:
         entry: git-secrets
         language: system
         args: ["--scan"]
-  # - repo: local
-  #   hooks:
-  #     - id: coverage
-  #       name: coverage
-  #       entry: coverage
-  #       language: system
-  #       args: ["run", "--source=secretctl/", "setup.py", "test"]

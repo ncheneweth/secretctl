@@ -1,15 +1,11 @@
 import os
 from setuptools import setup, find_packages
 
-
-#version = os.environ['CIRCLE_SHA1'][:7] if os.environ['CIRCLE_SHA1'] else os.environ['CIRCLE_TAG']
-if os.environ.get('CIRCLE_SHA1'):
-    version = os.environ['CIRCLE_SHA1'][:7]
-else:
-    version = os.environ['CIRCLE_TAG']
-
 with open("README.md", "r") as fh:
     long_description = fh.read()
+
+with open("_version.py", "r") as fh:
+    version = fh.read()
 
 requirements=[
     'invoke==1.3.0',

@@ -2,6 +2,6 @@
 import pkg_resources
 from invoke import Collection, Program
 from secretctl import cli
+from _version import __version__
 
-program = Program(namespace=Collection.from_module(cli), version=pkg_resources.get_distribution("secretctl").version)
-#program = Program(namespace=Collection.from_module(cli), version='0.0.15')
+program = Program(namespace=Collection.from_module(cli), version=__version__)

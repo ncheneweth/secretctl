@@ -31,6 +31,7 @@ setup(
         'Development Status :: 3 - Alpha',
     ],
     python_requires='>=3.5',
+    version=version,
     install_requires=requirements,
     setup_requires=['pytest-runner'],
     tests_require=['pytest'],

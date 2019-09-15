@@ -1,11 +1,9 @@
 import os
 from setuptools import setup, find_packages
+from _version import __version__
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
-
-with open("_version.py", "r") as fh:
-    version = fh.read()
 
 requirements=[
     'invoke==1.3.0',
@@ -31,7 +29,7 @@ setup(
         'Development Status :: 3 - Alpha',
     ],
     python_requires='>=3.5',
-    version=version,
+    version=__version__,
     install_requires=requirements,
     setup_requires=['pytest-runner'],
     tests_require=['pytest'],

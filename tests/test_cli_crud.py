@@ -6,6 +6,7 @@ import pytest
 from secretctl.cli import create
 from secretctl.cli import read
 from secretctl.cli import update
+from secretctl.cli import delete
 
 @mock_secretsmanager
 def test_create_read_update_delete(capsys, monkeypatch):
@@ -57,6 +58,11 @@ def test_create_read_update_delete(capsys, monkeypatch):
     captured_stdout, captured_stderr = capsys.readouterr()
     assert captured_stdout == "123abc\n"
 
+    # confirm outcome of deleted
+    delete(_ctx, 'app/env/val1', recovery=7)
+    captured_stdout, captured_stderr = capsys.readouterr()
+    assert captured_stdout == "app/env/val1 deleted\n"
+
     # moto does not yet support description or tag resources for sercretsemanager
 
     # test create cli fails on attempt to create existing secrets
@@ -70,3 +76,7 @@ def test_create_read_update_delete(capsys, monkeypatch):
     # test update cli fails on attempt to update nonexisting secret
     with pytest.raises(SystemExit):
         update(_ctx, 'app/env/val3', '123abc', isjson=False, description=None)
+
+    # test delete fails on attempt to delete nonexisting secret
+    with pytest.raises(SystemExit):
+        delete(_ctx, 'app/env/val3', recovery=14)

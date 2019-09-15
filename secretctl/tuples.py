@@ -109,3 +109,12 @@ def list_secrets():
     for page in page_iterator:
         _secrets += page['SecretList']
     return _secrets
+
+def delete_secret(path, recovery=7):
+    """delete target secret"""
+    try:
+        resp = _session.delete_secret(SecretId=path, RecoveryWindowInDays=recovery)
+        return resp
+    except ClientError as e:
+        print(e)
+        sys.exit(1)

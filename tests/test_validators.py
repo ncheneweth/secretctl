@@ -1,5 +1,5 @@
 import pytest
-from secretctl.validators import validate_path, tags_to_json, read_value
+from secretctl.validators import validate_path, validate_recovery, tags_to_json, read_value
 import sys
 
 # test secretctl.validators.validate_path()
@@ -22,6 +22,14 @@ def test_validate_path():
         assert validate_path('app:env') == 'app:env'
     with pytest.raises(SystemExit):
         assert validate_path('app/env/name with spaces') == 'app/env/name with spaces'
+
+# test secretctl.validators.validate_recovery()
+def test_validate_recovery():
+    assert validate_recovery('14') == '14'
+
+    # length not in 1..180 range
+    with pytest.raises(SystemExit):
+        assert validate_recovery('200') == '200'
 
 # test secretctl.validators.tags_to_json()
 def test_tags_to_json():

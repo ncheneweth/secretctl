@@ -7,6 +7,7 @@ from secretctl.tuples import get_secret
 from secretctl.tuples import create_secret
 from secretctl.tuples import update_secret
 from secretctl.tuples import list_secrets
+from secretctl.tuples import delete_secret
 
 # moto does not support secretsmanager tag or untag tests
 
@@ -55,3 +56,7 @@ def test_Secret():
     assert len(secrets) == 2
     for secret in secrets:
         assert secret['Name'] in secrets_created
+
+    # delete secret
+    resp = delete_secret('myapp/dev/value_1')
+    assert resp['Name'] == 'myapp/dev/value_1'

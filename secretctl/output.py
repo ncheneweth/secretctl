@@ -2,6 +2,7 @@
 import json
 from colorama import init, Fore
 from secretctl.validators import json_to_tags
+from secretctl.tuples import Secret
 init(autoreset=True)
 
 MAX_DESC_WIDTH = 42
@@ -48,7 +49,9 @@ def print_list(secrets):
 
 def desc_col_length(secrets):
     """calculate width of DESCRIPTION column"""
-    col_w = len(max(secrets, key=lambda secret: len(secret.description) if secret.description else 0).description) + 2
+    temp_secs = secrets.copy()
+    temp_secs.append(Secret(path='temp', description='temp'))
+    col_w = len(max(temp_secs, key=lambda secret: len(secret.description) if secret.description else 0).description) + 2
     col_w = max([col_w, MIN_DESC_WIDTH])
     return col_w if col_w <= MAX_DESC_WIDTH else MAX_DESC_WIDTH
 

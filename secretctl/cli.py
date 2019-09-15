@@ -3,6 +3,7 @@ import json
 from invoke import task
 
 from .validators import validate_path
+from .validators import validate_recovery
 from .validators import tags_to_json
 from .validators import set_secret
 from .validators import read_value
@@ -13,6 +14,7 @@ from .tuples import get_secret
 from .tuples import tag_secret
 from .tuples import untag_secret
 from .tuples import list_secrets
+from .tuples import delete_secret
 
 from .output import print_read, print_list, print_export
 
@@ -172,3 +174,26 @@ def export(_ctx, path, output='tfvars'):
         print_export(secrets, output=output)
     else:
         print('secretctl: no secrets match filter')
+
+@task(optional=['recovery'])
+def delete(_ctx, path, recovery=7):
+    """delete path [--recovery INT]
+
+       $> secretctl delete myapp/dev
+       myapp/dev deleted
+
+       Flags:
+
+         --recovery INT  A deleted secret will not be accessible via the cli. The secret still exists
+                         with SecretsManager and can be recovered via the Console. SecretsManager schedules
+                         the secret for permanent deletion after 7 days by default. You can override the
+                         default using this flag, specifying the number of days (max 30) before permanent deletion.
+
+                         $>  secretctl delete myapp/dev -r 14
+
+    """
+    secret_kwargs = {}
+    secret_kwargs['path'] = validate_path(path)
+    secret_kwargs['recovery'] = validate_recovery(recovery)
+    resp = delete_secret(**secret_kwargs)
+    print(f"{resp['Name']} deleted")

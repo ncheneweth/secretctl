@@ -8,13 +8,21 @@ DELIM = '/'
 
 # validate user path input
 def validate_path(path):
-    """validate secret path name: characters, delimeter, lenth"""
+    """validate secret path name: characters, delimeter, length"""
     path = path[:-1] if path[-1] == '/' else path
     if not re.match(r"^(?=.{2,256}$)([a-zA-Z0-9_@.-]+\/)*([a-zA-Z0-9_@.-])*[a-zA-Z0-9_@.-]$", path):
         print("secretctl: invalid path/key name. Allowable characters include [A-z0-9_@.-], " \
               "/ for path delimiter, 3 to 256 chars long")
         sys.exit(1)
     return path
+
+# validate user recovery days input
+def validate_recovery(recovery):
+    """validate recovery days: integer, length"""
+    if int(recovery) in range(7, 30):
+        return recovery
+    print('secretctl: invalid recovery days. Must be integer between 7 and 30')
+    sys.exit(1)
 
 # convert cli provided tags into key:value json
 def tags_to_json(tags, novalue=False):

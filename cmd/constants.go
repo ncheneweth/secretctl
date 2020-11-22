@@ -1,6 +1,8 @@
 package cmd
 
+// secretctl default settings
 const (
+	// AssumeRole default define an AWS IAM role to assume
 	AssumeRole = "none"
 
 	ConfigEnvDefault             = "SECRETCTL"

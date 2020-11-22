@@ -33,9 +33,10 @@ repos:
     hooks:
       - id: go-fmt
         args: ["-w", "cmd"]
-  #     - id: go-vet
-  #     - id: go-lint
-  #     - id: go-imports
+      - id: go-vet
+        args: ["cmd"]
+      - id: go-lint
+      - id: go-imports
   #     - id: go-cyclo
   #       args: [-over=15]
   #     - id: gometalinter

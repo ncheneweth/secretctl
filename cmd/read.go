@@ -3,21 +3,29 @@ package cmd
 import (
 	"encoding/base64"
 	"fmt"
-	"github.com/atotto/clipboard"
-	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/awserr"
-	"github.com/aws/aws-sdk-go/service/secretsmanager"
-	"github.com/spf13/cobra"
 	"io/ioutil"
 	"os"
 	"os/exec"
 	"runtime"
 	"strconv"
+
+	"github.com/atotto/clipboard"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/awserr"
+	"github.com/aws/aws-sdk-go/service/secretsmanager"
+	"github.com/spf13/cobra"
 )
 
+// Clip -c : read secret into clipboard
 var Clip bool
+
+// Previous -p : return previous version of a secret
 var Previous bool
+
+// OutFile -o : write secret to Outfile
 var OutFile string
+
+// Mode -m : permission mode to apply to Outfile, default is 0600
 var Mode string
 
 // readCmd represents the read command

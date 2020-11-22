@@ -28,10 +28,10 @@ repos:
         entry: git-secrets
         language: system
         args: ["--scan"]
-  # - repo: git://github.com/dnephin/pre-commit-golang
-  #   rev: v0.3.5
-  #   hooks:
-  #     - id: go-fmt
+  - repo: git://github.com/dnephin/pre-commit-golang
+    rev: v0.3.5
+    hooks:
+      - id: go-fmt
   #     - id: go-vet
   #     - id: go-lint
   #     - id: go-imports

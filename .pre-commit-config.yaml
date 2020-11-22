@@ -37,7 +37,7 @@ repos:
         args: ["cmd"]
       - id: go-lint
       - id: go-imports
-  #     - id: go-cyclo
+      - id: go-cyclo
   #       args: [-over=15]
   #     - id: gometalinter
   #     - id: golangci-lint

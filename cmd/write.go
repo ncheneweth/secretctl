@@ -10,7 +10,7 @@ import (
 var writeCmd = &cobra.Command{
 	Use:   "write <path>[/<to> ...]/<secret>",
 	Short: "Write a secret.",
-	Long: `Write a secret.`,
+	Long:  `Write a secret.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("write called")
 	},

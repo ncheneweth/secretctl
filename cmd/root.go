@@ -2,10 +2,10 @@ package cmd
 
 import (
 	"fmt"
-	"os"
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"os"
 )
 
 var cfgFile string
@@ -14,7 +14,7 @@ var cfgFile string
 var rootCmd = &cobra.Command{
 	Use:   "secretctl",
 	Short: "multisource secrets management",
-	Long: `pipeline optimized cli for use with aws secrets manager.`,
+	Long:  `pipeline optimized cli for use with aws secrets manager.`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	// Run: func(cmd *cobra.Command, args []string) { },
@@ -32,7 +32,7 @@ func Execute() {
 func init() {
 	cobra.OnInitialize(initConfig)
 
-  rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", ConfigFileDefaultLocationMsg)
+	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", ConfigFileDefaultLocationMsg)
 }
 
 // initConfig sets the config values based on the following order of precedent:
@@ -49,30 +49,30 @@ func initConfig() {
 		// Use config file from the flag.
 		viper.SetConfigFile(cfgFile)
 	} else {
-    viper.AddConfigPath(defaultConfigLocation())
-    viper.SetConfigName(ConfigFileDefaultName)
+		viper.AddConfigPath(defaultConfigLocation())
+		viper.SetConfigName(ConfigFileDefaultName)
 	}
 
 	// If a config file is found, read it in, else write a blank.
-  if err := viper.ReadInConfig(); err != nil {
+	if err := viper.ReadInConfig(); err != nil {
 		home := defaultConfigLocation()
 
 		check(os.MkdirAll(home, 0700))
-    fmt.Println(home+"/"+ConfigFileDefaultName+"."+ConfigFileDefaultType)
-    emptyFile, err := os.Create(home+"/"+ConfigFileDefaultName+"."+ConfigFileDefaultType)
-  	check(err)
-  	emptyFile.Close()
-  }
+		fmt.Println(home + "/" + ConfigFileDefaultName + "." + ConfigFileDefaultType)
+		emptyFile, err := os.Create(home + "/" + ConfigFileDefaultName + "." + ConfigFileDefaultType)
+		check(err)
+		emptyFile.Close()
+	}
 }
 
 func defaultConfigLocation() string {
-  home, err := homedir.Dir()
-  check(err)
-  return home + ConfigFileDefaultLocation
+	home, err := homedir.Dir()
+	check(err)
+	return home + ConfigFileDefaultLocation
 }
 
 func check(e error) {
 	if e != nil {
-			panic(e)
+		panic(e)
 	}
 }

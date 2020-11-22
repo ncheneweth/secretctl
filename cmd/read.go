@@ -1,18 +1,18 @@
 package cmd
 
 import (
-	"os"
-	"os/exec"
-	"fmt"
-	"runtime"
 	"encoding/base64"
-	"io/ioutil"
-	"strconv"
-	"github.com/spf13/cobra"
+	"fmt"
+	"github.com/atotto/clipboard"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/awserr"
 	"github.com/aws/aws-sdk-go/service/secretsmanager"
-	"github.com/atotto/clipboard"
+	"github.com/spf13/cobra"
+	"io/ioutil"
+	"os"
+	"os/exec"
+	"runtime"
+	"strconv"
 )
 
 var Clip bool
@@ -24,8 +24,8 @@ var Mode string
 var readCmd = &cobra.Command{
 	Use:   "read [<path>/<to>/...]<secret>",
 	Short: "Read a secret.",
-	Long: `Read a secret.`,
-	Args: cobra.ExactArgs(1),
+	Long:  `Read a secret.`,
+	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		var keyValue string
 		version := "AWSCURRENT"
@@ -81,23 +81,23 @@ func getSecret(keyName string, version string) (keyValue string) {
 	if err != nil {
 		if aerr, ok := err.(awserr.Error); ok {
 			switch aerr.Code() {
-				case secretsmanager.ErrCodeDecryptionFailure:
+			case secretsmanager.ErrCodeDecryptionFailure:
 				// Secrets Manager can't decrypt the protected secret text using the provided KMS key.
 				fmt.Println(secretsmanager.ErrCodeDecryptionFailure, aerr.Error())
 
-				case secretsmanager.ErrCodeInternalServiceError:
+			case secretsmanager.ErrCodeInternalServiceError:
 				// An error occurred on the server side.
 				fmt.Println(secretsmanager.ErrCodeInternalServiceError, aerr.Error())
 
-				case secretsmanager.ErrCodeInvalidParameterException:
+			case secretsmanager.ErrCodeInvalidParameterException:
 				// You provided an invalid value for a parameter.
 				fmt.Println(secretsmanager.ErrCodeInvalidParameterException, aerr.Error())
 
-				case secretsmanager.ErrCodeInvalidRequestException:
+			case secretsmanager.ErrCodeInvalidRequestException:
 				// You provided a parameter value that is not valid for the current state of the resource.
 				fmt.Println(secretsmanager.ErrCodeInvalidRequestException, aerr.Error())
 
-				case secretsmanager.ErrCodeResourceNotFoundException:
+			case secretsmanager.ErrCodeResourceNotFoundException:
 				// We can't find the resource that you asked for.
 				fmt.Println(secretsmanager.ErrCodeResourceNotFoundException, aerr.Error())
 			}

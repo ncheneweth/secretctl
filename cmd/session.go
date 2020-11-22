@@ -5,12 +5,12 @@ import (
 
 	// "github.com/spf13/cobra"
 	//"reflect"
-	"github.com/spf13/viper"
 	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/credentials/stscreds"
+	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/secretsmanager"
+	"github.com/spf13/viper"
 )
 
 func newSecretsManagerSession() (svc *secretsmanager.SecretsManager) {

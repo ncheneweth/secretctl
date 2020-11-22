@@ -10,7 +10,7 @@ import (
 var shellCmd = &cobra.Command{
 	Use:   "shell",
 	Short: "Launch process with secrets as environment variables.",
-	Long: `Launch process with secrets as environment variables.`,
+	Long:  `Launch process with secrets as environment variables.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("shell called")
 	},

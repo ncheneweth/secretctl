@@ -3,7 +3,7 @@
 [![Test Coverage][cc-coverage-badge]][cc-coverage-repo]
 [![Maintainability][cc-maintainability-badge]][cc-maintainability-repo]
 [![License][license-badge]][license]
-Command-line tool for working with aws secrets manager.
+Command-line tool optimized for working with aws secrets manager in CI/CD pipelines.
 
 [circle-badge]: https://circleci.com/gh/ncheneweth/secretctl.svg?style=svg
 [circle-repo]: https://circleci.com/gh/ncheneweth/secretctl
@@ -18,24 +18,24 @@ Command-line tool for working with aws secrets manager.
 
 ## Usage
 
-Management Commands:
-  credentials Manage your credentials.
-  config      Manage your local configuration.
-
 Commands:
   help      Show help.
-  init      Initialize the secretctl client for first use on this device.
+  role      Define the IAM role to assume when accessing AWS.
   write     Write a secret.
   read      Read a secret.
-  generate  Generate a random secret.
   ls        List contents of a path.
-  rm        Remove a directory, secret or version.
-  tree      List contents of a directory in a tree-like format.
+  rm        Remove a secret or version.
   inspect   Print details of a resource.
   template  Inject secrets into a template.
   run       Pass secrets as environment variables to a process.
 
 
   is it needed?
-  mkdir     Create a new directory.
+
   audit     Show the audit log.
+
+
+  # local dev
+
+GOOS = darwin, linux, windows
+GOARCH = amd64, 386(win)

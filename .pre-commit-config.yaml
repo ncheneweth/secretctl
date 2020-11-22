@@ -1,13 +1,26 @@
 ---
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v2.1.0
+    rev: v3.3.0
     hooks:
-      - id: check-merge-conflict
-      - id: trailing-whitespace
-      - id: check-yaml
       - id: check-added-large-files
+      - id: check-case-conflict
+      - id: check-docstring-first
+      - id: check-executables-have-shebangs
+      - id: check-json
+      - id: check-merge-conflict
+      - id: check-symlinks
+      - id: check-toml
+      - id: check-yaml
+        args: ["--allow-multiple-documents"]
+      - id: detect-aws-credentials
+      - id: detect-private-key
+      - id: end-of-file-fixer
       - id: forbid-new-submodules
+      - id: mixed-line-ending
+      - id: pretty-format-json
+        args: ["--autofix - automatically format json files"]
+      - id: trailing-whitespace
   - repo: local
     hooks:
       - id: git-secrets
@@ -15,3 +28,15 @@ repos:
         entry: git-secrets
         language: system
         args: ["--scan"]
+  # - repo: git://github.com/dnephin/pre-commit-golang
+  #   rev: v0.3.5
+  #   hooks:
+  #     - id: go-fmt
+  #     - id: go-vet
+  #     - id: go-lint
+  #     - id: go-imports
+  #     - id: go-cyclo
+  #       args: [-over=15]
+  #     - id: gometalinter
+  #     - id: golangci-lint
+  #     - id: go-unit-tests

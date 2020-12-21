@@ -2,18 +2,16 @@ package cmd
 
 import (
 	"fmt"
+	"os"
+
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"os"
 )
 
 var roleCmd = &cobra.Command{
 	Use:   "role",
 	Short: "Define an IAM role to assume when accessing AWS.",
 	Long:  `Define an IAM role to assume when accessing AWS.`,
-	// Run: func(cmd *cobra.Command, args []string) {
-	//
-	// },
 }
 
 func init() {
@@ -36,6 +34,7 @@ var showCmd = &cobra.Command{
 	},
 }
 
+// set the current secretctl role configuration
 var setCmd = &cobra.Command{
 	Use:   "set ARN",
 	Short: "set the IAM RoleARN to assume.",
@@ -43,18 +42,19 @@ var setCmd = &cobra.Command{
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		viper.Set("AssumeRole", args[0])
-		check(viper.WriteConfigAs(viper.ConfigFileUsed()))
+		exitError(viper.WriteConfigAs(viper.ConfigFileUsed()))
 		fmt.Printf("set assumerole: %s\n", args[0])
 	},
 }
 
+// clear the current secretctl role configuration
 var unsetCmd = &cobra.Command{
 	Use:   "unset",
 	Short: "Clear the IAM RoleARN.",
 	Long:  `Clear the IAM RoleARN.`,
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
-		check(os.Remove(viper.ConfigFileUsed()))
+		exitError(os.Remove(viper.ConfigFileUsed()))
 		fmt.Println("Role ARN setting reset to default")
 	},
 }

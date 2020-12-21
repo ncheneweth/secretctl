@@ -2,10 +2,11 @@ package cmd
 
 import (
 	"fmt"
+	"os"
+
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"os"
 )
 
 var cfgFile string
@@ -57,22 +58,16 @@ func initConfig() {
 	if err := viper.ReadInConfig(); err != nil {
 		home := defaultConfigLocation()
 
-		check(os.MkdirAll(home, 0700))
+		exitError(os.MkdirAll(home, 0700))
 		fmt.Println(home + "/" + ConfigFileDefaultName + "." + ConfigFileDefaultType)
 		emptyFile, err := os.Create(home + "/" + ConfigFileDefaultName + "." + ConfigFileDefaultType)
-		check(err)
+		exitError(err)
 		emptyFile.Close()
 	}
 }
 
 func defaultConfigLocation() string {
 	home, err := homedir.Dir()
-	check(err)
+	exitError(err)
 	return home + ConfigFileDefaultLocation
-}
-
-func check(e error) {
-	if e != nil {
-		panic(e)
-	}
 }

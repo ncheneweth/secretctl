@@ -39,3 +39,6 @@ Commands:
 
 GOOS = darwin, linux, windows
 GOARCH = amd64, 386(win)
+
+- clone
+- go install .

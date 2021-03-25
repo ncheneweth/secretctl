@@ -8,7 +8,7 @@ with open("README.md", "r") as fh:
 requirements=[
     'invoke==1.3.0',
     'boto3==1.9.226',
-    'pyyaml==5.1.2',
+    'pyyaml==5.4',
     'requests==2.22.0',
     'colorama==0.4.1'
 ]
